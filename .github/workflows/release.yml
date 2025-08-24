@@ -15,9 +15,9 @@ jobs:
       - uses: actions/setup-go@v5
         with:
           go-version: '1.22'
-      - run: go build -ldflags "-X main.version=${VERSION}" -o "${RUNNER_TMP}/example" go/example/main.go
+      - run: go build -ldflags "-X main.version=${VERSION}" -o "${{ runner.temp }}/example" go/example/main.go
       - run: |
           gh release create "${VERSION}" --title "${VERSION}" --generate-notes
-          gh release upload "${VERSION}" "${RUNNER_TMP}/example"
+          gh release upload "${VERSION}" "${{ runner.temp }}/example"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
